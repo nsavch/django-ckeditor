@@ -1,14 +1,14 @@
 Django CKEditor
 ===============
 
-**NOTICE: django-ckeditor has backward incompatible code moves against 4.5.1.**
+**NOTICE: django-ckeditor 5 has backward incompatible code moves against 4.5.1.**
 
 
 File upload support have been moved to ckeditor_uploader.  The urls are in ckeditor_uploader.urls while for file uploading widget you have to use RichTextUploadingField instead of RichTextField.
 
 
 **Django admin CKEditor integration.**
-Provides a ``RichTextField``, ``RichTextUploadingField`` and ``CKEditorWidget`` utilizing CKEditor with image upload and browsing support included.
+Provides a ``RichTextField``, ``RichTextUploadingField``, ``CKEditorWidget`` and ``CKEditorUploadingWidget`` utilizing CKEditor with image upload and browsing support included.
 
 * This version also includes:
 #. support to django-storages (works with S3)
@@ -112,8 +112,9 @@ Optional for file upload
 ~~~~~~~~~~~~~~~~~~~~~~~~
 #. All uploaded files are slugified by defaults, to disable this feature set ``CKEDITOR_UPLOAD_SLUGIFY_FILENAME`` to ``False``
 
-#. Set the CKEDITOR_RESTRICT_BY_USER setting to ``True`` in the project's ``settings.py`` file (default ``False``). This restricts access to uploaded images to the uploading user (e.g. each user only sees and uploads their own images). Superusers can still see all images. **NOTE**: This restriction is only enforced within the CKEditor media browser.
+#. Set the ``CKEDITOR_RESTRICT_BY_USER`` setting to ``True`` in the project's ``settings.py`` file (default ``False``). This restricts access to uploaded images to the uploading user (e.g. each user only sees and uploads their own images). Superusers can still see all images. **NOTE**: This restriction is only enforced within the CKEditor media browser.
 
+#. Set the ``CKEDITOR_BROWSE_SHOW_DIRS`` setting to ``True`` to show directories on the "Browse Server" page. This enables image grouping by directory they are stored in, sorted by date.
 
 Usage
 -----
@@ -209,7 +210,7 @@ django-ckeditor send by default the following ckeditor plugins, however, not all
 
 Restricting file upload
 -----------------------
-#. To restrict file types you can upload check ckeditor_uploader.views.ImageUploadView. There are two interesting methods: _verify_file and _on_verification_failure. You can create your own view that inherits this one and overrides those or other methods. Then in your urls.py set your view to point to the ``upload/`` url.
+#. To restrict upload functionality to image files only, add ``CKEDITOR_ALLOW_NONIMAGE_FILES = False`` in your settings.py file. Currently non-image files are allowed by default.
 
 #. By default the upload and browse URLs use staff_member_required decorator - ckeditor_uploader/urls.py - if you want other decorators just insert two urls found in that urls.py and not include it.
 
